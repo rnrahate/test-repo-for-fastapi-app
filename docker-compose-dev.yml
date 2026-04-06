@@ -1,0 +1,39 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres-db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: HEISENBERG
+      POSTGRES_DB: fastapi_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build: .
+    container_name: fastapi-app
+    image: fastapi-image
+    restart: always
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./:/usr/src/app:ro
+    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+    env_file:
+      - .env
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
