@@ -11,9 +11,9 @@ class Settings(BaseSettings):
     algorithm: str
     access_token_expire_minutes: int
 
-    model_config = {
-        "env_file": Path(__file__).parent.parent / ".env" if os.getenv("ENV") != "production" else None
-    }
+    # model_config = {
+    #     "env_file": Path(__file__).parent.parent / ".env" if os.getenv("ENV") != "production" else None
+    # }
 
 settings = Settings() # type: ignore
 
