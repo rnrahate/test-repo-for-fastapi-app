@@ -1,6 +1,6 @@
 from pydantic_settings import BaseSettings
 from pathlib import Path
-
+import os
 class Settings(BaseSettings):
     database_hostname: str
     database_port: int
@@ -12,7 +12,7 @@ class Settings(BaseSettings):
     access_token_expire_minutes: int
 
     model_config = {
-        "env_file": Path(__file__).parent.parent / ".env"
+        "env_file": Path(__file__).parent.parent / ".env" if os.getenv("ENV") != "production" else None
     }
 
 settings = Settings() # type: ignore
