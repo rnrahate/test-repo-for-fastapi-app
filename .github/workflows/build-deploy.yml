@@ -10,24 +10,24 @@ jobs:
     environment: 
       name: testing
     env:
-      DATABASE_HOSTNAME: ${ {DATABASE_HOSTNAME} }
-      DATABASE_PORT: ${ {DATABASE_PORT} }
-      DATABASE_USERNAME: ${ {DATABASE_USERNAME} }
-      DATABASE_PASSWORD: ${ {DATABASE_PASSWORD} }
-      DATABASE_NAME: ${ {DATABASE_NAME} }
-      SECRET_KEY: ${ {SECRET_KEY} }
-      ALGORITHM: ${ {ALGORITHM} }
-      ACCESS_TOKEN_EXPIRE_MINUTES: ${ {ACCESS_TOKEN_EXPIRE_MINUTES} }
-    
+      DATABASE_HOSTNAME: ${ {secrets.DATABASE_HOSTNAME} }
+      DATABASE_PORT: ${ {secrets.DATABASE_PORT} }
+      DATABASE_USERNAME: ${ {secrets.DATABASE_USERNAME} }
+      DATABASE_PASSWORD: ${ {secrets.DATABASE_PASSWORD} }
+      DATABASE_NAME: ${ {secrets.DATABASE_NAME} }
+      SECRET_KEY: ${ {secrets.SECRET_KEY} }
+      ALGORITHM: ${ {secrets.ALGORITHM} }
+      ACCESS_TOKEN_EXPIRE_MINUTES: ${ {secrets.ACCESS_TOKEN_EXPIRE_MINUTES} }
+
     services:
       postgres:
         image: postgres:latest
         ports:
           - 5432:5432
         env:
-          POSTGRES_USER: ${ {DATABASE_USERNAME} }
-          POSTGRES_PASSWORD: ${ {DATABASE_PASSWORD} }
-          POSTGRES_DB: ${ {DATABASE_NAME} }
+          POSTGRES_USER: ${ {secrets.DATABASE_USERNAME} }
+          POSTGRES_PASSWORD: ${ {secrets.DATABASE_PASSWORD} }
+          POSTGRES_DB: ${ {secrets.DATABASE_NAME} }
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
